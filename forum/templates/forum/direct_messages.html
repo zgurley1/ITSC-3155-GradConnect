@@ -1,0 +1,4 @@
+<h2>Direct Messages</h2>
+{% for message in messages %}
+    <div>{{ message.sender.username }}: {{ message.content }}</div>
+{% endfor %}
