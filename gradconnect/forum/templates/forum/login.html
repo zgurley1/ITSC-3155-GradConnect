@@ -1,0 +1,7 @@
+<h2>Login to GradConnect Below!</h2>
+<form method="post">{% csrf_token %}
+    <input type="email" name="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Sign In</button>
+</form>
+<a href="{% url 'signup' %}">Don't have an account</a>

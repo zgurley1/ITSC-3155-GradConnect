@@ -1,0 +1,7 @@
+<h2>Create Room</h2>
+<form method="post">{% csrf_token %}
+    <input type="text" name="name" placeholder="Room Name">
+    <input type="text" name="topic" placeholder="Topic">
+    <textarea name="description" placeholder="Description"></textarea>
+    <button type="submit">Create Room</button>
+</form>

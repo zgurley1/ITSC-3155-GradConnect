@@ -1,0 +1,5 @@
+<h2>Sign Up for GradConnect Below!</h2>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
