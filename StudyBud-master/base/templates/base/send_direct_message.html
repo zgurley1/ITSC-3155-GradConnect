@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h2>Send a message to {{ recipient.username }}</h2>
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Send</button>
+</form>
+
+<p><a href="{% url 'view_direct_message_with_recipient' recipient_id=recipient.id %}">Back to conversation</a></p>
+{% endblock content %}

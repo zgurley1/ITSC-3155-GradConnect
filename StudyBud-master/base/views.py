@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User
-from .forms import RoomForm, UserForm, MyUserCreationForm
+from .models import Room, Topic, Message, User, DirectMessage
+from .forms import RoomForm, UserForm, MyUserCreationForm, DirectMessageForm
 
 # Create your views here.
 
@@ -14,6 +14,81 @@ from .forms import RoomForm, UserForm, MyUserCreationForm
 #     {'id': 2, 'name': 'Design with me'},
 #     {'id': 3, 'name': 'Frontend developers'},
 # ]
+
+@login_required
+def send_direct_message(request, recipient_id):
+    try:
+        recipient = User.objects.get(id=recipient_id)
+    except User.DoesNotExist:
+        return redirect('some_error_page')  # Handle non-existent recipient
+
+    if request.method == "POST":
+        form = DirectMessageForm(request.POST)
+        if form.is_valid():
+            new_message = form.save(commit=False)
+            new_message.sender = request.user
+            new_message.recipient = recipient
+            new_message.save()
+
+            # Redirect to the conversation with the recipient
+            return redirect('view_direct_message_with_recipient', recipient_id=recipient_id)
+    else:
+        form = DirectMessageForm()
+
+    return render(request, 'base/send_direct_message.html', {'form': form, 'recipient': recipient})
+    
+
+
+@login_required
+def view_direct_message(request, recipient_id=None):
+    # If a recipient is provided, retrieve messages between the user and that recipient
+    if recipient_id:
+        recipient = get_object_or_404(User, id=recipient_id)
+        messages = DirectMessage.objects.filter(
+            (Q(sender=request.user) & Q(recipient=recipient)) | 
+            (Q(sender=recipient) & Q(recipient=request.user))
+        ).order_by('created_at')
+    else:
+        messages = []  # Empty list if no recipient selected
+
+    # Retrieve all recipients the logged-in user has communicated with
+    received_messages = DirectMessage.objects.filter(recipient=request.user)
+    sent_messages = DirectMessage.objects.filter(sender=request.user)
+
+    all_messages = list(received_messages) + list(sent_messages)
+
+    recipients = set()
+    for message in all_messages:
+        if message.sender != request.user:
+            recipients.add(message.sender)
+        if message.recipient != request.user:
+            recipients.add(message.recipient)
+
+    # Extract recipient IDs for the template
+    recipient_ids = [user.id for user in recipients]
+
+    return render(request, 'base/view_direct_message.html', {
+        'messages': messages,
+        'recipient_ids': recipient_ids,  # All potential recipients
+        'recipient_id': recipient_id,    # Current recipient's ID, if available
+    })
+
+@login_required
+def view_direct_message_with_recipient(request, recipient_id):
+    # Fetch messages between the logged-in user and the recipient
+    messages = DirectMessage.objects.filter(
+        (Q(sender=request.user) & Q(recipient_id=recipient_id)) | 
+        (Q(sender_id=recipient_id) & Q(recipient=request.user))
+    ).order_by('created_at')
+    
+    # Get the recipient user
+    recipient = User.objects.get(id=recipient_id)
+
+    return render(request, 'base/view_direct_message_with_recipient.html', {
+        'messages': messages,
+        'recipient_id': recipient_id,
+        'recipient': recipient,  # Pass the recipient object to the template
+    })
 
 
 def loginPage(request):

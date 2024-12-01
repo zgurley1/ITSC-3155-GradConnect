@@ -35,6 +35,32 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
+    
+class DirectMessage(models.Model):
+    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    # def __str__(self):
+    #     return f"Message from {self.sender.username} to {self.recipient.username}: {self.body[:50]}"
+
+    def __str__(self):
+        return " "
+
+    def save(self, *args, **kwargs):
+        # Ensure sender and recipient are not the same person
+        if self.sender == self.recipient:
+            raise ValueError("Sender and recipient cannot be the same")
+        
+        # Save without calling super()
+        # self.created_at = models.DateTimeField(auto_now_add=True)
+        # self.pk = None  # Ensure it creates a new instance if needed
+        # models.Model.save(self, *args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class Message(models.Model):

@@ -963,7 +963,7 @@ a {
   fill: var(--color-main-light);
 }
 
-.room__header {
+/* .room__header {
   max-height: 30vh;
   overflow-y: auto;
   position: absolute;
@@ -986,7 +986,7 @@ a {
   padding-left: 2rem;
   padding-right: 2rem;
   height: 80.5vh;
-  /* overflow-y: auto; */
+  overflow-y: auto;
   padding-bottom: 0;
 }
 
@@ -997,6 +997,51 @@ a {
     height: 80.5vh;
     overflow-y: auto;
     padding-bottom: 0;
+  }
+}
+
+.room__info {
+  display: flex;
+  justify-content: space-between;
+} */
+
+.room__header {
+  /* Allow the header to expand naturally */
+  max-height: none;
+  overflow: visible;
+  position: relative; /* Reset positioning to avoid unnecessary offset */
+  width: 95%;
+  background: var(--color-dark);
+  z-index: 999;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 500px) {
+  .room__header {
+    padding-right: 2rem;
+  }
+}
+
+.room__box {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  height: 80vh; /* Set a fixed height for the message area */
+  overflow: hidden; /* Prevent unnecessary overflow */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 0;
+}
+
+.room__conversation {
+  flex-grow: 1; /* Make the conversation area take remaining space */
+  overflow-y: auto; /* Enable scrolling for messages */
+}
+
+@media screen and (max-width: 500px) {
+  .room__box {
+    padding-left: 2.5rem;
+    padding-right: 2rem;
   }
 }
 
@@ -1163,3 +1208,4 @@ a {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
+

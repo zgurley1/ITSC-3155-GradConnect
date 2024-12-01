@@ -44,6 +44,7 @@
 
     <!-- Activities Start -->
     {% include 'base/activity_component.html' %}
+    <a href="{% url 'send_direct_message' recipient_id=user.id %}">Send Message</a>
     <!-- Activities End -->
   </div>
 </main>

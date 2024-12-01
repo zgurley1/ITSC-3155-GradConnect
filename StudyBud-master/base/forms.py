@@ -1,6 +1,8 @@
+import django
+from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from .models import Room, User
+from .models import Room, User, DirectMessage
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -20,3 +22,11 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['avatar', 'name', 'username', 'email', 'bio']
+
+class DirectMessageForm(forms.ModelForm):
+    class Meta:
+        model = DirectMessage
+        fields = ['body']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter your message here...'})
+        }
