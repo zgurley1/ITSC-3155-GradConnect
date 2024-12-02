@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
-:root {
+/* :root {
   --color-main: #71c6dd;
   --color-main-light: #e1f6fb;
   --color-dark: #3f4156;
@@ -12,6 +12,20 @@
   --color-bg: hsl(0, 0%, 100%);
   --color-success: #5dd693;
   --color-error: #fc4b0b;
+} */
+
+:root {
+  --color-main: #FFFFFF;
+  --color-main-light: #899064;
+  --color-dark: #005035;
+  --color-dark-medium: #A49665; /* A medium green for balance */
+  --color-dark-light: #2a5b2e; /* Darker green for accents */
+  --color-light: #F1E6B2; /* Gold as a light accent color */
+  --color-gray: #8b8b8b; /* Standard gray */
+  --color-light-gray: #101820; /* Light gray background */
+  --color-bg: #A49665; /* Background color set to white */
+  --color-success: #5dd693; /* Success color in a greenish tone */
+  --color-error: #802F2D; /* Error color in a bright orange */
 }
 
 /*========== base styles ==========*/
@@ -86,7 +100,7 @@ a {
 .btn--link {
   border-radius: 0;
   padding: 0;
-  color: var(--color-main);
+  color: var(--color-dark);
   box-shadow: none;
 }
 
@@ -95,8 +109,8 @@ a {
 }
 
 .btn--main {
-  background-color: var(--color-main);
-  color: var(--color-dark);
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
 .btn:hover {
@@ -105,7 +119,7 @@ a {
 
 .btn--dark {
   background-color: var(--color-dark-light);
-  color: var(--color-light);
+  color: var(--color-dark);
 }
 
 .btn > svg {
@@ -294,7 +308,7 @@ a {
 }
 
 .header__search > label {
-  background-color: var(--color-dark-medium);
+  background-color: var(--color-bg);
   padding: 1.3rem 1rem;
   display: flex;
   align-items: center;
@@ -303,7 +317,7 @@ a {
 }
 
 .header__search svg {
-  fill: var(--color-gray);
+  fill: var(--color-light-gray);
   width: 2rem;
   height: 2rem;
   margin-left: 1rem;
@@ -314,7 +328,7 @@ a {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--color-light);
+  color: var(--color-light-gray);
 }
 
 @media screen and (max-width: 800px) {
@@ -350,7 +364,7 @@ a {
   align-items: center;
   font-weight: 500;
   text-decoration: none;
-  color: var(--color-gray);
+  color: var(--color-bg);
 }
 
 .header__menu img {
@@ -362,7 +376,7 @@ a {
 }
 
 .header__menu span {
-  color: var(--color-main);
+  color: var(--color-light);
   font-weight: 500;
   font-size: 1.4rem;
   display: block;
@@ -371,7 +385,7 @@ a {
 .header__menu svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-dark-light);
+  fill: var(--color-light);
 }
 
 .dropdown-button {
@@ -379,6 +393,7 @@ a {
   border: 0;
   outline: 0;
   cursor: pointer;
+  color: var(--color-dark)
 }
 
 .dropdown-button:hover svg {
@@ -563,7 +578,7 @@ a {
 .topics__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-dark-light);
+  color: var(--color-light-gray);
 }
 
 .topics__list {
@@ -629,7 +644,7 @@ a {
 .roomList__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: var(--color-light-gray);
   letter-spacing: 1px;
 }
 
@@ -658,6 +673,7 @@ a {
   display: flex;
   align-items: center;
   gap: 1rem;
+  color: var(--color-light);
 }
 
 .roomListRoom__actions {
@@ -665,6 +681,7 @@ a {
   align-items: flex-start;
   gap: 1rem;
   position: relative;
+  color: var(--color-bg);
 }
 
 .roomListRoom__actions span {
@@ -687,7 +704,7 @@ a {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
-  color: var(--color-light);
+  color: var(--color-bg);
   transition: all 0.3s ease-in-out;
 }
 
@@ -704,7 +721,7 @@ a {
 }
 
 .roomListRoom__joined {
-  color: var(--color-light-gray);
+  color: var(--color-bg);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -737,7 +754,7 @@ a {
 }
 
 .activities__header h2 {
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark);
   text-transform: uppercase;
   font-weight: 500;
   padding: 1rem 1.5rem;
@@ -770,6 +787,10 @@ a {
 
 .activities__boxContent {
   font-size: 1.4rem;
+}
+
+.activities__boxContent a {
+  color: var(--color-light);
 }
 
 .activities__boxContent a:hover {
@@ -919,7 +940,7 @@ a {
 
 .room__top,
 .participants__top {
-  background: var(--color-dark-light);
+  background: var(--color-dark);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1025,16 +1046,22 @@ a {
   align-items: center;
   margin-bottom: 1rem;
   transition: all 0.3s ease-in-out;
+  color: var(--color-light);
 }
 
 .room__author:hover {
   text-decoration: underline;
 }
 
+.room__details {
+  color: var(--color-light);
+}
+
+
 .room__topics {
   padding: 0.5rem 1.5rem;
-  background: var(--color-dark-light);
-  color: var(--color-light);
+  background: var(--color-bg);
+  color: var(--color-light-gray);
   display: inline-block;
   font-size: 1.4rem;
   border-radius: 1.5rem;
@@ -1084,6 +1111,11 @@ a {
   align-items: center;
   gap: 1.5rem;
   font-size: 1.4rem;
+  color: var(--color-dark);
+}
+
+.thread__author a {
+  color: var(--color-dark);
 }
 
 .thread__authorInfo {
@@ -1105,13 +1137,14 @@ a {
   left: 0;
   right: 0;
   background: transparent;
+  
 }
 
 .room__message > form > input {
   resize: none;
-  background-color: var(--color-dark-light);
-  color: var(--color-light);
-  border: none;
+  background-color: var(--color-bg);
+  color: var(--color-light-gray);
+  /* border: none; */
   outline: none;
   border-radius: 0.7rem;
   height: 4.5rem;
@@ -1121,6 +1154,7 @@ a {
   font-size: 1.4rem;
   font-weight: 500;
   position: relative;
+  border-color: var(--color-light-gray);
 }
 
 .room__message > form > input::placeholder {
@@ -1152,14 +1186,15 @@ a {
   margin-bottom: 2rem;
 }
 
+
 .participant p {
-  color: var(--color-light-gray);
+  color: var(--color-bg);
   line-height: 1.2;
 }
 
 .participant span {
   display: block;
   font-weight: 500;
-  color: var(--color-main);
+  color: var(--color-light);
   font-weight: 1.4rem;
 }
