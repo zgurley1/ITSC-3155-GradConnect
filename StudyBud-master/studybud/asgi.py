@@ -1,5 +1,5 @@
 """
-ASGI config for studybud project.
+ASGI config for GradConnect project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
