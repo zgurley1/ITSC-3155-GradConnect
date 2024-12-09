@@ -318,6 +318,11 @@ a {
   padding: 10px; /* Optional: Add padding around the search bar */
 }
 
+.header__search input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-bg) inset !important;
+  -webkit-text-fill-color: var(--color-light-grey) !important;
+}
+
 .header__search > label {
   background-color: var(--color-bg);
   padding: 1.3rem 1rem;
