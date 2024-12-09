@@ -826,13 +826,28 @@ a {
 }
 
 .roomListRoom__author {
-  font-weight: 500;
+  font-size: 1.5rem;
   display: flex;
   align-items: center; /* Align items vertically (centered) */
   gap: 1rem; /* Space between the profile picture and the username */
   color: var(--color-light); /* Ensure the username is visible */
   font-size: 1.2rem; /* Make the username text larger */
 }
+
+.roomListRoom__author .roomListRoom__username {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center; /* Align items vertically (centered) */
+  /* gap: 1rem;  */
+  color: var(--color-light); /* Ensure the username is visible */
+}
+
+.roomListRoom__author .roomListRoom__timestamp {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center; /* Align items vertically (centered) */
+}
+
 
 /* Profile Picture */
 .roomListRoom__author img {
@@ -966,7 +981,7 @@ a {
   gap: 1rem; /* Space between avatar and username */
   color: var(--color-light);
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .activityCard__author_new img {
@@ -976,8 +991,8 @@ a {
 }
 
 .activityCard__timestamp_new {
-  font-size: 0.9rem; /* Smaller font size for timestamp */
-  color: var(--color-gray);
+  font-size: 1.2rem; /* Smaller font size for timestamp */
+  color: var(--color-light-gray);
 }
 
 .activityCard__actions_new {
