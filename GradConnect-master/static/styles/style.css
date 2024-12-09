@@ -78,7 +78,7 @@ a {
 
 /*========== components ==========*/
 .container {
-  max-width: 120rem;
+  /* max-width: 120rem; */
   width: 90%;
   margin: auto;
 }
@@ -308,11 +308,22 @@ a {
   color: var(--color-light);
 }
 
+.header__search {
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin: 20px auto; /* Add vertical spacing and center */
+  width: 100%; /* Span full width */
+  max-width: 800px; /* Limit the width of the search bar */
+  padding: 10px; /* Optional: Add padding around the search bar */
+}
+
 .header__search > label {
   background-color: var(--color-bg);
   padding: 1.3rem 1rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   border-radius: 4px;
 }
@@ -573,47 +584,6 @@ a {
 =>  Topics
 ================================*/
 
-/* .topics__header {
-  margin-bottom: 2rem;
-}
-
-.topics__header h2 {
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--color-light-gray);
-}
-
-.topics__list {
-  list-style: none;
-}
-
-.topics__list li a {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-  font-weight: 500;
-  color: var(--color-light-gray);
-  transition: all 0.3s ease-in-out;
-}
-
-.topics__list li a.active,
-.topics__list li a:hover {
-  color: var(--color-main);
-}
-
-.topics__list li a span {
-  padding: 0.5rem 1rem;
-  background-color: var(--color-dark);
-  border-radius: 3px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.topics-page a:hover {
-  text-decoration: underline;
-} */
-
 .topics__header {
   margin-bottom: 2rem;
 }
@@ -732,34 +702,33 @@ a {
   background-color: var(--color-dark-main); /* Darker shade on hover */
 }
 
-/* Grid Layout for Room List */
-/* .roomList {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 2rem;
-  position: relative;
-} */
 
-/* .roomList {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 3rem; 
-  width: 100%;
-  position: relative;
-  margin: 0 auto;
-} */
 
 .roomList {
   display: grid; /* Use CSS Grid for layout */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Create responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); /* Ensure responsive grid */
   gap: 20px; /* Space between the cards */
   width: 100%; /* Ensure the grid spans the full width of the container */
   margin: 0 auto; /* Center the grid */
-  justify-content: start; /* Ensure cards are aligned to the start of the container */
+  justify-content: stretch; /* Ensure cards stretch to fill available space */
+  align-items: start; /* Align cards to the top of the row */
+  max-height: 500px; /* Set the maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  margin-bottom: 40px;
 }
 
+.roomList::-webkit-scrollbar {
+  width: 8px; /* Adjust scrollbar width */
+}
+
+.roomList::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray); /* Scrollbar thumb color */
+  border-radius: 4px; /* Rounded scrollbar thumb */
+}
+
+.roomList::-webkit-scrollbar-track {
+  background-color: var(--color-bg); /* Scrollbar track color */
+}
 
 /* Individual Card Style */
 .roomListRoom {
@@ -772,6 +741,12 @@ a {
   justify-content: space-between;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.roomListRoom__timestamp {
+  font-size: 0.9rem;
+  color: var(--color-light-gray);
 }
 
 
@@ -788,8 +763,12 @@ a {
   align-items: center; /* Vertically center header content */
   margin-bottom: 1.5rem; /* Add spacing between the header and the scrollable section */
   width: 100%; /* Ensure the header spans the full width */
-  position: relative; /* Ensure the header stays static and outside the scrollable area */
-  z-index: 1; /* Keep the header above other elements if necessary */
+  position: sticky; /* Make the header stick at the top of the container */
+  top: 0; /* Stick to the top of the container */
+  background-color: var(--color-bg); /* Match the background color */
+  z-index: 1; /* Keep the header above the scrollable content */
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--color-dark); 
 }
 
 /* Room Title (Card Content) */
@@ -860,142 +839,184 @@ a {
 =>  Activities
 ================================*/
 
-/* .activities {
-  background: var(--color-dark);
-  border-radius: 5px;
-  overflow: hidden;
-}
 
-
-.activities__header h2 {
-  background-color: var(--color-dark);
-  text-transform: uppercase;
-  font-weight: 500;
-  padding: 1rem 1.5rem;
-  color: var(--color-light);
-  letter-spacing: 1px;
-  font-size: 1.4rem;
-}
-
-.activities__box {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  border: 2px solid var(--color-dark-medium);
-  border-radius: 5px;
-}
-
-.activities__boxHeader p {
-  font-size: 1.4rem;
-  line-height: 1.3;
-}
-
-.activities__boxHeader p span {
-  color: var(--color-gray);
-  font-size: 1.2rem;
-  display: block;
-}
-
-.activities__boxContent {
-  margin-left: 4.2rem;
-}
-
-.activities__boxContent {
-  font-size: 1.4rem;
-}
-
-.activities__boxContent a {
-  color: var(--color-light);
-}
-
-.activities__boxContent a:hover {
-  text-decoration: underline;
-}
-
-.activities__boxRoomContent {
-  background: var(--color-bg);
-  padding: 1rem;
-  border-radius: 5px;
-  margin-top: 1rem;
-  margin-left: -4.2rem;
-} */
 
 .activities {
-  /* display: block;
-  background: var(--color-dark);
-  border-radius: 5px;
-  padding: 1rem;
-  margin-top: 0; */
-
-  /* display: flex; 
-  flex-direction: column; 
-  gap: 1.5rem;
-  margin-top: 2rem;  */
-
   display: none;
 }
 
-
-
-.activities__header h2 {
-  background-color: var(--color-dark);
-  text-transform: uppercase;
-  font-weight: 500;
-  padding: 1rem 1.5rem;
-  color: var(--color-light);
-  letter-spacing: 1px;
-  font-size: 1.4rem;
-  margin-bottom: 1rem; /* Add space below the header */
-}
-
-
-/* Activities Box */
-.activities__box {
-  background-color: var(--color-dark);
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+/* .activities_new {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+} */
+
+.activities_new {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%; /* Ensure it spans the container */
+  padding: 0 20px;
 }
 
-/* Activities Box Header */
-.activities__boxHeader p {
-  font-size: 1.4rem;
-  line-height: 1.3;
+.activities__header_new {
+  padding: 10px 20px; /* Add padding around the text */
+  border-radius: 8px; /* Rounded corners */
+  text-align: center; /* Center the header text */
+  margin-bottom: 10px; /* Add spacing below the header */
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  position: relative; /* For decorative elements */
 }
 
-.activities__boxHeader p span {
-  color: var(--color-gray);
-  font-size: 1.2rem;
-  display: block;
+.activities__header_new::before,
+.activities__header_new::after {
+  content: '';
+  position: absolute;
+  width: 60px; /* Keep the width of the lines */
+  height: 3px; /* Keep the height */
+  background-color: var(--color-dark); /* Color for the lines */
+  border-radius: 3px;
 }
 
-/* Activities Box Content */
-.activities__boxContent {
-  margin-left: 4.2rem;
-  font-size: 1.4rem;
+.activities__header_new::before {
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.activities__boxContent a {
+.activities__header_new::after {
+  bottom: 20px; /* Bring closer to the header */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.activities__header_new h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* .activities__list_new {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px; 
+  justify-content: center;
+  align-items: center; 
+  width: 100%; 
+} */
+
+.activities__list_new {
+  display: grid; /* Use CSS Grid for card layout */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid for cards */
+  gap: 20px; /* Add space between cards */
+  justify-content: center; /* Center the cards horizontally */
+  align-items: center; /* Align cards vertically */
+  max-width: 1200px; /* Limit the width of the grid */
+  margin: 0 auto; /* Center the entire grid */
+}
+
+.activityCard_new {
+  background-color: var(--color-dark);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Column layout for card content */
+  justify-content: flex-start; /* Align content to the top */
+  align-items: flex-start; /* Align items to the left */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  height: auto; /* Allow card height to adjust dynamically */
+  min-height: 200px; /* Ensure a minimum height for uniformity */
+}
+
+.activityCard_new:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.activityCard__header_new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%; /* Ensure header spans the full width */
+}
+
+.activityCard__author_new {
+  display: flex;
+  align-items: center; /* Align avatar and username */
+  gap: 1rem; /* Space between avatar and username */
   color: var(--color-light);
+  text-decoration: none;
+  font-size: 1.2rem;
 }
 
-.activities__boxContent a:hover {
-  text-decoration: underline;
+.activityCard__author_new img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Circular avatar */
 }
 
-/* Room Content within Activities */
-.activities__boxRoomContent {
-  background: var(--color-bg);
-  padding: 1rem;
-  border-radius: 5px;
-  margin-top: 1rem;
-  margin-left: -4.2rem;
+.activityCard__timestamp_new {
+  font-size: 0.9rem; /* Smaller font size for timestamp */
+  color: var(--color-gray);
 }
 
+.activityCard__actions_new {
+  display: flex;
+  align-items: center; /* Align icons vertically */
+}
 
+.activityCard__content_new {
+  font-size: 1.4rem;
+  color: var(--color-light-gray);
+  line-height: 1.6;
+  margin-top: 1rem; /* Add spacing above the content */
+  flex-grow: 1; /* Allow this section to take available space */
+}
+
+.delete-icon {
+  color: var(--color-error);
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth color change on hover */
+}
+
+.delete-icon:hover {
+  color: var(--color-light); /* Light color for hover state */
+}
+
+.activityCard__content_new {
+  font-size: 1.4rem;
+  color: var(--color-light-gray);
+  line-height: 1.6; /* Improve readability */
+}
+
+.activityCard__room_new {
+  color: var(--color-main);
+  text-decoration: none; /* Remove underline */
+}
+
+.activityCard__room_new:hover {
+  text-decoration: underline; /* Add underline on hover for links */
+}
+
+.activityCard__message_new {
+  font-size: 1.2rem;
+  color: var(--color-light);
+  margin-top: 0.5rem;
+  line-height: 1.4;
+  word-wrap: break-word; /* Ensure long text wraps */
+}
 
 .roomListRoom__actions svg {
   fill: var(--color-light-gray);

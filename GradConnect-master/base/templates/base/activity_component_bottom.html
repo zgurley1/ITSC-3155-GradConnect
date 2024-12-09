@@ -1,22 +1,22 @@
-<div class="activities">
-    <div class="activities__header">
+<div class="activities_new">
+    <div class="activities__header_new">
         <h2>Recent Activities</h2>
     </div>
-    <div class="activities__list">
+    <div class="activities__list_new">
         {% for message in room_messages %}
         <div class="activityCard_new">
-            <div class="activityCard__header">
-                <a href="{% url 'user-profile' message.user.id %}" class="activityCard__author">
+            <div class="activityCard__header_new">
+                <a href="{% url 'user-profile' message.user.id %}" class="activityCard__author_new">
                     <div class="avatar avatar--small_new">
                         <img src="{{message.user.avatar.url}}" alt="User Avatar" />
                     </div>
                     <p>
                         @{{message.user.username}}
-                        <span class="activityCard__timestamp">{{message.created|timesince}} ago</span>
+                        <span class="activityCard__timestamp_new">{{message.created|timesince}} ago</span>
                     </p>
                 </a>
                 {% if request.user == message.user %}
-                <div class="activityCard__actions">
+                <div class="activityCard__actions_new">
                     <a href="{% url 'delete-message' message.id %}" class="delete-icon" title="Delete Message">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path
@@ -26,9 +26,9 @@
                 </div>
                 {% endif %}
             </div>
-            <div class="activityCard__content">
+            <div class="activityCard__content_new">
                 <p>Replied to post: 
-                    <a href="{% url 'room' message.room.id %}" class="activityCard__room">
+                    <a href="{% url 'room' message.room.id %}" class="activityCard__room_new">
                         "{{message.room}}"
                     </a>
                 </p>

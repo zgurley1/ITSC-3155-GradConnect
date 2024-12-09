@@ -619,7 +619,7 @@ a {
 =>  Room List
 ================================*/
 
-.roomList__header {
+/* .roomList__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -638,7 +638,7 @@ a {
   color: var(--color-dark-light);
 }
 
-/*========== Room List Room ==========*/
+
 
 .roomListRoom {
   margin-bottom: 2.4rem;
@@ -724,7 +724,7 @@ a {
   border-radius: 5rem;
   font-weight: 500;
   font-size: 1.3rem;
-}
+} */
 
 /*==============================
 =>  Activities
