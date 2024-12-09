@@ -843,7 +843,7 @@ a {
 }
 
 .roomListRoom__author .roomListRoom__timestamp {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center; /* Align items vertically (centered) */
 }
@@ -1076,7 +1076,7 @@ a {
 .auth__tagline {
   text-align: center;
   margin-bottom: 3rem;
-  color: var(--color-main);
+  color: var(--color-light);
   font-weight: 500;
   font-size: 1.8rem;
 }
@@ -1630,4 +1630,11 @@ a {
 #topics_page li a{
 
   background-color: var(--color-bg);
+}
+
+.btn--link-yellow {
+  border-radius: 0;
+  padding: 0;
+  color: var(--color-light);
+  box-shadow: none;
 }
