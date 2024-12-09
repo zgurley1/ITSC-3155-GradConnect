@@ -20,13 +20,7 @@ urlpatterns = [
     path('topics/', views.topicsPage, name="topics"),
     path('activity/', views.activityPage, name="activity"),
 
-    # path('direct_message/<int:recipient_id>/', views.send_direct_message, name='send_direct_message'),
-    # path('direct_message/inbox/', views.view_direct_message, name='view_direct_message'),
-
-    # path('direct_message/inbox/', views.view_direct_message, name='view_direct_message'),
-    # path('direct_message/<int:recipient_id>/', views.send_direct_message, name='send_direct_message'),
-    # path('direct_message/<int:recipient_id>/', views.view_direct_message_with_recipient, name='view_direct_message_with_recipient'),
-
     path('send_message/<int:recipient_id>/', views.send_direct_message, name='send_direct_message'),
-    path('view_message/<int:recipient_id>/', views.view_direct_message_with_recipient, name='view_direct_message_with_recipient'),
+
+    path('remove-skill/<int:skill_id>/', views.remove_skill, name='remove_skill'),
 ]

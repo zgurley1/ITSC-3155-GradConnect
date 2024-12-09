@@ -1,13 +1,88 @@
 {% extends 'main.html' %}
 
-{% block content %}
-<h2>Send a message to {{ recipient.username }}</h2>
 
-<form method="POST">
+{% block content %}
+<div class="dm-header">
+  <a href="{% url 'user-profile' recipient.id %}" class="btn btn--main">Back to Profile</a>
+  <h2 class="conversation-heading">Conversation with {{ recipient.username }}</h2>
+</div>
+
+
+<!-- Conversation Messages -->
+<ul id="messages-list">
+  {% for message in messages %}
+    <li class="{% if message.sender == request.user %}sent-by-user{% else %}received{% endif %}">
+      <strong>
+        {% if message.sender == request.user %}
+          You
+        {% else %}
+          {{ message.sender.username }}
+        {% endif %}
+      </strong> : {{ message.body }}
+    </li>
+  {% endfor %}
+</ul>
+
+
+<!-- Send Message Form -->
+<form id="message-form" method="POST" action="{% url 'send_direct_message' recipient_id=recipient.id %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form.body }}
   <button type="submit">Send</button>
 </form>
 
-<p><a href="{% url 'view_direct_message_with_recipient' recipient_id=recipient.id %}">Back to conversation</a></p>
+
+<!-- JavaScript for AJAX -->
+<script>
+  // Function to scroll the chat log to the bottom
+  function scrollToBottom() {
+    const messagesList = document.getElementById('messages-list');
+    messagesList.scrollTop = messagesList.scrollHeight;
+  }
+
+
+  // Scroll to bottom when the page loads
+  window.addEventListener('load', scrollToBottom);
+
+
+  // AJAX form submission to send a message
+  document.getElementById('message-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+
+    let form = this;
+    let formData = new FormData(form);
+    let url = form.action;
+    let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        let newMessage = document.createElement('li');
+        newMessage.className = 'sent-by-user';
+        newMessage.innerHTML = `<strong>You</strong> : ${data.body}`;
+        document.getElementById('messages-list').appendChild(newMessage);
+        form.reset();
+        scrollToBottom(); // Scroll to bottom after adding a new message
+      } else {
+        alert('Error: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
 {% endblock content %}
+
+
+

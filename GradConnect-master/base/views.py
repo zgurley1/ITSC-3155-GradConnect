@@ -1,26 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User, DirectMessage
-from .forms import RoomForm, UserForm, MyUserCreationForm, DirectMessageForm
+from .models import Room, Topic, Message, User, DirectMessage, Skill
+from .forms import RoomForm, UserForm, MyUserCreationForm, DirectMessageForm, AddSkillForm
 
 # Create your views here.
 
-# rooms = [
-#     {'id': 1, 'name': 'Lets learn python!'},
-#     {'id': 2, 'name': 'Design with me'},
-#     {'id': 3, 'name': 'Frontend developers'},
-# ]
 
 @login_required
 def send_direct_message(request, recipient_id):
-    try:
-        recipient = User.objects.get(id=recipient_id)
-    except User.DoesNotExist:
-        return redirect('some_error_page')  # Handle non-existent recipient
+    recipient = get_object_or_404(User, id=recipient_id)
+
 
     if request.method == "POST":
         form = DirectMessageForm(request.POST)
@@ -30,13 +23,38 @@ def send_direct_message(request, recipient_id):
             new_message.recipient = recipient
             new_message.save()
 
-            # Redirect to the conversation with the recipient
-            return redirect('view_direct_message_with_recipient', recipient_id=recipient_id)
+
+            # Return JSON response for AJAX requests
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'body': new_message.body,
+                    'sender': request.user.username,
+                    'created_at': new_message.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                })
+
+
+            return redirect('send_direct_message', recipient_id=recipient_id)
+
+
     else:
         form = DirectMessageForm()
 
-    return render(request, 'base/send_direct_message.html', {'form': form, 'recipient': recipient})
-    
+
+    messages = DirectMessage.objects.filter(
+        (Q(sender=request.user) & Q(recipient=recipient)) |
+        (Q(sender=recipient) & Q(recipient=request.user))
+    ).order_by('created_at')
+
+
+    return render(request, 'base/send_direct_message.html', {
+        'form': form,
+        'recipient': recipient,
+        'messages': messages,
+    })
+   
+
+
 
 
 @login_required
@@ -45,17 +63,20 @@ def view_direct_message(request, recipient_id=None):
     if recipient_id:
         recipient = get_object_or_404(User, id=recipient_id)
         messages = DirectMessage.objects.filter(
-            (Q(sender=request.user) & Q(recipient=recipient)) | 
+            (Q(sender=request.user) & Q(recipient=recipient)) |
             (Q(sender=recipient) & Q(recipient=request.user))
         ).order_by('created_at')
     else:
         messages = []  # Empty list if no recipient selected
 
+
     # Retrieve all recipients the logged-in user has communicated with
     received_messages = DirectMessage.objects.filter(recipient=request.user)
     sent_messages = DirectMessage.objects.filter(sender=request.user)
 
+
     all_messages = list(received_messages) + list(sent_messages)
+
 
     recipients = set()
     for message in all_messages:
@@ -64,8 +85,10 @@ def view_direct_message(request, recipient_id=None):
         if message.recipient != request.user:
             recipients.add(message.recipient)
 
+
     # Extract recipient IDs for the template
     recipient_ids = [user.id for user in recipients]
+
 
     return render(request, 'base/view_direct_message.html', {
         'messages': messages,
@@ -73,22 +96,6 @@ def view_direct_message(request, recipient_id=None):
         'recipient_id': recipient_id,    # Current recipient's ID, if available
     })
 
-@login_required
-def view_direct_message_with_recipient(request, recipient_id):
-    # Fetch messages between the logged-in user and the recipient
-    messages = DirectMessage.objects.filter(
-        (Q(sender=request.user) & Q(recipient_id=recipient_id)) | 
-        (Q(sender_id=recipient_id) & Q(recipient=request.user))
-    ).order_by('created_at')
-    
-    # Get the recipient user
-    recipient = User.objects.get(id=recipient_id)
-
-    return render(request, 'base/view_direct_message_with_recipient.html', {
-        'messages': messages,
-        'recipient_id': recipient_id,
-        'recipient': recipient,  # Pass the recipient object to the template
-    })
 
 
 def loginPage(request):
@@ -183,9 +190,28 @@ def userProfile(request, pk):
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
+    skills = user.skills.all()
+    add_skill_form = AddSkillForm()
+
+    if request.method == 'POST':
+        form = AddSkillForm(request.POST)
+        if form.is_valid():
+            skill_name = form.cleaned_data['skill_name']
+            skill, created = Skill.objects.get_or_create(name=skill_name)
+            user.skills.add(skill)
+            return redirect('user-profile', pk=pk)
+
     context = {'user': user, 'rooms': rooms,
-               'room_messages': room_messages, 'topics': topics}
+               'room_messages': room_messages, 'topics': topics, 'skills': skills, 'add_skill_form': add_skill_form,}
+    
+
     return render(request, 'base/profile.html', context)
+
+@login_required
+def remove_skill(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+    request.user.skills.remove(skill)
+    return redirect('user-profile', pk=request.user.id)
 
 
 @login_required(login_url='login')

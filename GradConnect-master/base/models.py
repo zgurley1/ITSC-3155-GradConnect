@@ -2,10 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+class Skill(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(null=True)
+    skills = models.ManyToManyField(Skill, related_name="users", blank=True)
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
@@ -56,10 +63,6 @@ class DirectMessage(models.Model):
         if self.sender == self.recipient:
             raise ValueError("Sender and recipient cannot be the same")
         
-        # Save without calling super()
-        # self.created_at = models.DateTimeField(auto_now_add=True)
-        # self.pk = None  # Ensure it creates a new instance if needed
-        # models.Model.save(self, *args, **kwargs)
         super().save(*args, **kwargs)
 
 
@@ -75,3 +78,5 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+    
+

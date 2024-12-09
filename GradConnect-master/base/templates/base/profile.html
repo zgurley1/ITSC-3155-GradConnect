@@ -42,9 +42,28 @@
     </div>
     <!-- Room List End -->
 
+    <!-- Add Skill Form -->
+    <form method="POST">
+      {% csrf_token %}
+      {{ add_skill_form.as_p }}
+      <button type="submit" class="btn btn--main">Add Skill</button>
+    </form>
+
+    <!-- Skills List -->
+    <ul class="skills-list">
+      {% for skill in skills %}
+        <li>
+          {{ skill.name }}
+          <a href="{% url 'remove_skill' skill.id %}" class="remove-skill">×</a>
+        </li>
+      {% empty %}
+        <p>No skills added yet.</p>
+      {% endfor %}
+    </ul>
+
     <!-- Activities Start -->
     {% include 'base/activity_component.html' %}
-    <a href="{% url 'send_direct_message' recipient_id=user.id %}">Send Message</a>
+    <a href="{% url 'send_direct_message' recipient_id=user.id %}" class="btn btn--main">Send Message</a>
     <!-- Activities End -->
   </div>
 </main>
