@@ -28,7 +28,7 @@
 <form id="message-form" method="POST" action="{% url 'send_direct_message' recipient_id=recipient.id %}">
   {% csrf_token %}
   {{ form.body }}
-  <button type="submit">Send</button>
+  <button type="submit" class="btn btn--green">Send</button>
 </form>
 
 

@@ -40,6 +40,13 @@ class Room(models.Model):
     class Meta:
         ordering = ['-updated', '-created']
 
+    def save(self, *args, **kwargs):
+        # Save the room instance first
+        super().save(*args, **kwargs)
+        # Add the host to participants if it's not already there
+        if self.host and not self.participants.filter(id=self.host.id).exists():
+            self.participants.add(self.host)
+
     def __str__(self):
         return self.name
     

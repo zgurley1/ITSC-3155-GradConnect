@@ -193,7 +193,9 @@ def userProfile(request, pk):
     skills = user.skills.all()
     add_skill_form = AddSkillForm()
 
-    if request.method == 'POST':
+    add_skill_form = AddSkillForm() if request.user == user else None
+
+    if request.method == 'POST' and request.user == user:
         form = AddSkillForm(request.POST)
         if form.is_valid():
             skill_name = form.cleaned_data['skill_name']

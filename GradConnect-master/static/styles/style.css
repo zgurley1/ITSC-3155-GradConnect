@@ -118,8 +118,8 @@ a {
 }
 
 .btn--dark {
-  background-color: var(--color-dark-light);
-  color: var(--color-dark);
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
 .btn > svg {
@@ -227,7 +227,7 @@ a {
   position: absolute;
   top: 5rem;
   right: 0.5rem;
-  background: var(--color-dark-light);
+  background: var(--color-dark);
   border-radius: 5px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
   overflow: hidden;
@@ -466,7 +466,7 @@ a {
 .layout__boxHeader {
   display: flex;
   padding: 1.5rem;
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark);
 }
 
 .layout__boxTitle {
@@ -687,15 +687,16 @@ a {
 }
 
 .roomList__header .create-room-button {
-  background-color: var(--color-main); /* Match button with the theme */
-  color: #fff;
+  /* background-color: var(--color-main);
   border: none;
   border-radius: 0.5rem;
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease; */
+
+  
 }
 
 .roomList__header .create-room-button:hover {
@@ -715,6 +716,7 @@ a {
   max-height: 500px; /* Set the maximum height for the container */
   overflow-y: auto; /* Enable vertical scrolling */
   margin-bottom: 40px;
+  padding-right: 10px
 }
 
 .roomList::-webkit-scrollbar {
@@ -769,6 +771,7 @@ a {
   z-index: 1; /* Keep the header above the scrollable content */
   padding: 0 1rem;
   border-bottom: 1px solid var(--color-dark); 
+  padding-bottom: 5px
 }
 
 /* Room Title (Card Content) */
@@ -1428,7 +1431,7 @@ a {
 }
 
 .skills-list li {
-  background-color: var(--color-main-light);
+  background-color: var(--color-bg);
   color: var(--color-dark);
   padding: 5px 10px;
   border-radius: 15px;
@@ -1444,6 +1447,31 @@ a {
   font-weight: bold;
 }
 
+.add-skill-form {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between input and button */
+  justify-content: center; /* Center the form horizontally */
+}
+
+.add-skill-form button {
+  padding: 8px 20px; /* Compact padding for smaller size */
+  border: none;
+  border-radius: 8px; /* Slightly rounded corners */
+  background-color: var(--color-bg); /* Consistent background color */
+  color: var(--color-dark); /* Light text color */
+  font-size: 1.4rem; /* Reduced font size */
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for subtle effects */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+.add-skill-form button:hover {
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
 /*==============================
 =>  DM PAGE
 ================================*/
@@ -1504,9 +1532,9 @@ a {
 }
 
 
-/* Send button styling */
+
 #message-form button {
-  background-color: #0095f6;
+  background-color: var(--color-dark);
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1516,7 +1544,7 @@ a {
 }
 
 
-#message-form button:hover {
+/* #message-form button:hover {
   background-color: #0077cc;
 }
 
@@ -1535,7 +1563,7 @@ a {
 /* Style for the Back to Profile button */
 .btn--main {
   padding: 10px 20px;
-  border-radius: 30px;
+  /* border-radius: 30px; */
   text-decoration: none;
   font-weight: bold;
 }
@@ -1546,4 +1574,40 @@ a {
   font-size: 24px;
   text-align: center;
   margin: 0;
+}
+
+.btn--home {
+
+  background-color: var(--color-dark);
+  color: var(--color-dark);
+}
+
+.btn--green {
+  background-color: var(--color-dark) !important; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 10px 20px; /* Adjust padding */
+  border-radius: 30px; /* Optional: Rounded corners for a pill shape */
+  font-size: 16px; /* Adjust font size */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s ease; /* Add smooth hover effect */
+}
+
+.dropdown-pfp {
+  width: 32px; /* Set the size */
+  height: 32px;
+  border-radius: 50%; /* Make it circular */
+  object-fit: cover; /* Ensure it scales nicely */
+  margin-right: 10px; /* Add space between the image and text */
+}
+
+.roomListRoom__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+#topics_page li a{
+
+  background-color: var(--color-bg);
 }

@@ -1,3 +1,4 @@
+
 {% extends 'main.html' %}
 
 {% block content %}
@@ -7,63 +8,68 @@
     {% include 'base/topics_component.html' %}
     <!-- Topics End -->
 
-    <!-- Room List Start -->
+    <!-- Profile Section Start -->
     <div class="roomList">
       <div class="profile">
         <div class="profile__avatar">
           <div class="avatar avatar--large active">
-            <img src="{{user.avatar.url}}" />
+            <img src="{{ user.avatar.url }}" />
           </div>
         </div>
         <div class="profile__info">
-          <h3>{{user.name}}</h3>
-          <p>@{{user.username}}</p>
+          <h3>{{ user.name }}</h3>
+          <p>@{{ user.username }}</p>
           {% if request.user == user %}
           <a href="{% url 'update-user' %}" class="btn btn--main btn--pill">Edit Profile</a>
           {% endif %}
         </div>
         <div class="profile__about">
           <h3>About</h3>
-          <p>
-            {{user.bio}}
-          </p>
+          <p>{{ user.bio|default:"This user hasn't added a bio yet." }}</p>
         </div>
+
+        <!-- Skills Section Start -->
+        <div class="skills-section">
+          <h3>Skills</h3>
+          {% if request.user == user %}
+          <form method="POST" class="add-skill-form">
+            {% csrf_token %}
+            {{ add_skill_form.as_p }}
+            <button type="submit" class="btn btn--main btn--pill">Add Skill</button>
+          </form>
+          {% endif %}
+          <ul class="skills-list">
+            {% for skill in skills %}
+              <li>
+                {{ skill.name }}
+                {% if request.user == user %}
+                <a href="{% url 'remove_skill' skill.id %}" class="remove-skill">×</a>
+                {% endif %}
+              </li>
+            {% empty %}
+              <p>No skills added yet.</p>
+            {% endfor %}
+          </ul>
+        </div>
+        <!-- Skills Section End -->
       </div>
 
+      <!-- Room List Start -->
       <div class="roomList__header">
         <div>
-          <h2>Study Rooms Hosted by {{user.username}}</a>
-          </h2>
+          <h2>Study Rooms Hosted by {{ user.username }}</h2>
         </div>
       </div>
       {% include 'base/feed_component.html' %}
-
-
+      <!-- Room List End -->
     </div>
-    <!-- Room List End -->
 
-    <!-- Add Skill Form -->
-    <form method="POST">
-      {% csrf_token %}
-      {{ add_skill_form.as_p }}
-      <button type="submit" class="btn btn--main">Add Skill</button>
-    </form>
-
-    <!-- Skills List -->
-    <ul class="skills-list">
-      {% for skill in skills %}
-        <li>
-          {{ skill.name }}
-          <a href="{% url 'remove_skill' skill.id %}" class="remove-skill">×</a>
-        </li>
-      {% empty %}
-        <p>No skills added yet.</p>
-      {% endfor %}
-    </ul>
-
+    <!-- Send Message Button -->
+    {% if request.user != user %}
+    <a href="{% url 'send_direct_message' recipient_id=user.id %}" class="btn btn--main send-message">Send Message</a>
+    {% endif %}
     <!-- Activities Start -->
     {% include 'base/activity_component.html' %}
-    <a href="{% url 'send_direct_message' recipient_id=user.id %}" class="btn btn--main">Send Message</a>
     <!-- Activities End -->
   </div>
 </main>
