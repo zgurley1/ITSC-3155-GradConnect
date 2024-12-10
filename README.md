@@ -19,7 +19,7 @@ cd GradConnect-master
 --> Create a virtual environment :
 ```bash
 # Install virtualenv first
-pip install virtualenv
+python -m pip install virtualenv
 
 # Then create your own virtual environment
 virtualenv envname
@@ -34,7 +34,7 @@ envname\scripts\activate
 
 --> Install the requirements :
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
 ```
 
