@@ -1,0 +1,51 @@
+
+# GradConnect
+</div>
+
+### Clone the repository
+
+--> Clone the repository using the command below :
+```bash
+git clone https://github.com/zgurley1/ITSC-3155-GradConnect/
+
+```
+
+--> Move into the directory where we have the project files : 
+```bash
+cd GradConnect-master
+
+```
+
+--> Create a virtual environment :
+```bash
+# Install virtualenv first
+pip install virtualenv
+
+# Then create your own virtual environment
+virtualenv envname
+
+```
+
+--> Activate the virtual environment :
+```bash
+envname\scripts\activate
+
+```
+
+--> Install the requirements :
+```bash
+pip install -r requirements.txt
+
+```
+
+#
+
+### Running the App
+
+--> To run the App, run the following command in the virtual environment :
+```bash
+python manage.py runserver
+
+```
+
+> The development server will be started at http://127.0.0.1:8000/
