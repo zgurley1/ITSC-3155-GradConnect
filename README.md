@@ -22,7 +22,7 @@ cd GradConnect-master
 python -m pip install virtualenv
 
 # Then create your own virtual environment
-virtualenv envname
+python -m virtualenv envname
 
 ```
 
