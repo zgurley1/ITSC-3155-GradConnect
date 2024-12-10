@@ -48,4 +48,4 @@ python manage.py runserver
 
 ```
 
-> The development server will be started at http://127.0.0.1:8000/
+> ctrl click the server link -> http://127.0.0.1:8000/ which will be in the terminal when you run the server
